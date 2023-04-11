@@ -8,7 +8,7 @@
     /*/
 User Function MA410MNU()
     
-    aAdd(aRotina, {'Informações do Pedido', 'U_Vendas()', 0, 6})
+    aAdd(aRotina, {'Resumo de Pedidos', 'U_Vendas()', 0, 6})
 Return 
 
 /*/{Protheus.doc} User Function Vendas
@@ -24,7 +24,7 @@ Return
 
 Static Function GetReport()
     local cAlias        := GetNextAlias()
-    local oRelatorio    := TReport():New("TREPORT", "Relatório de Pedidos de Venda",, {|oRelatorio| GetInfo(oRelatorio, cAlias)}, "Esse relatório imprimirá as informações do pedido de venda selecionado.", .F.)
+    local oRelatorio    := TReport():New("TREPORT", "Relatório de Pedidos de Venda",, {|oRelatorio| GetInfo(oRelatorio, cAlias)}, "Esse relatório imprimirá as informações dos pedidos de venda", .F.)
 
     local oSection1     := TRSection():New(oRelatorio, "Informações do Pedido de Venda",,,,,,,,,, .T.)
     local oSection2     := TRSection():New(oSection1, "Produtos no Pedido de Venda",,,,,,,,,, .T.)
