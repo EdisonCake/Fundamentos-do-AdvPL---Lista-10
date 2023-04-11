@@ -2,10 +2,13 @@
 #INCLUDE 'FWMVCDEF.CH'
 #INCLUDE 'REPORT.CH'
 
+#DEFINE ROSA_PASTEL RGB(255,182,193)
+#DEFINE AZUL_PASTEL RGB(128,206,255)
+
 /*/{Protheus.doc} User Function MT120BRW
     Ponto de Entrada da Rotina MATA121 (Exercício 03)
     @type  Function
-    @author user
+    @author Edison Cake
     @since 06/04/2023
     /*/
 User Function MT120BRW()
@@ -47,15 +50,15 @@ Static Function GetReport()
     TRCell():New(oSection1, "LOJA", cAlias, "LOJA",, 4,, {|| Alltrim(cLoja)}, "LEFT", .T., "LEFT",,,,,, .T.)
     TRCell():New(oSection1, "PAGTO.", cAlias, "PAGTO.",, 10,, {|| Alltrim(cPagto)}, "LEFT", .T., "LEFT",,,,,, .T.)
 
-    TRCell():New(oSection2, 'C7_PRODUTO', cAlias, 'CODIGO',, 8,,, 'LEFT', .T., 'LEFT',,,,,, .T.)
-    TRCell():New(oSection2, 'C7_DESCRI', cAlias, 'PRODUTO',, 50,,, 'LEFT', .T., 'LEFT',,,,,, .T.)
-    TRCell():New(oSection2, 'C7_QUANT', cAlias, 'QTD.',, 10,,, 'LEFT', .T., 'LEFT',,,,,, .T.)
-    TRCell():New(oSection2, 'C7_PRECO', cAlias, 'PREÇO',, 20,,, 'LEFT', .T., 'LEFT',,,,,, .T.)
-    TRCell():New(oSection2, 'C7_TOTAL', cTotal, 'TOTAL',, 20,,, 'LEFT', .T., 'LEFT',,,,,, .T.)
+    TRCell():New(oSection2, 'C7_PRODUTO', cAlias, 'CODIGO',, 8,,, 'LEFT', .T., 'LEFT',,,,ROSA_PASTEL,, .T.)
+    TRCell():New(oSection2, 'C7_DESCRI', cAlias, 'PRODUTO',, 50,,, 'LEFT', .T., 'LEFT',,,,ROSA_PASTEL,, .T.)
+    TRCell():New(oSection2, 'C7_QUANT', cAlias, 'QTD.',, 10,,, 'LEFT', .T., 'LEFT',,,,ROSA_PASTEL,, .T.)
+    TRCell():New(oSection2, 'C7_PRECO', cAlias, 'PREÇO',, 20,,, 'LEFT', .T., 'LEFT',,,,ROSA_PASTEL,, .T.)
+    TRCell():New(oSection2, 'TOTAL', cAlias, 'TOTAL',, 20,,{|| alltrim(cTotal)}, 'LEFT', .T., 'LEFT',,,,ROSA_PASTEL,, .T.)
 
     // Quebra e totalizador do exercício 04.
     oQuebra := TRBreak():New(oSection1, oSection1:Cell('PEDIDO'), "", .T.)
-    TRFunction():New(oSection2:Cell('C7_TOTAL'), 'VALTOT', 'SUM', oQuebra, 'VALOR TOTAL',,, .F., .F., .F.)
+    TRFunction():New(oSection2:Cell('TOTAL'), 'VALTOT', 'SUM', oQuebra, 'VALOR TOTAL',,, .F., .F., .F.)
     
 Return oRel
 
@@ -102,7 +105,8 @@ Static Function GetInfo(oRel, cAlias)
         oSection2:Cell('C7_DESCRI'):SetValue((cAlias)->(C7_DESCRI))
         oSection2:Cell('C7_QUANT'):SetValue((cAlias)->(C7_QUANT))
         oSection2:Cell('C7_PRECO'):SetValue((cAlias)->(C7_PRECO))
-        oSection2:Cell('C7_TOTAL'):SetValue((cAlias)->(C7_TOTAL))
+        // oSection2:Cell('C7_TOTAL'):SetValue((cAlias)->(C7_TOTAL))
+        cTotal := cvaltochar((cAlias)->(C7_TOTAL))
 
         oSection2:PrintLine()
 
@@ -131,7 +135,7 @@ Return
 
 Static Function Repo2()
     local cAlias    := GetNextAlias()
-    local oRel      := TReport():New("TREPORT", "Relatório de Pedido de Compra",, {|oRel| Get2(oRel, cAlias)}, "Esse relatório imprimirá as informações do pedido de compra selecionado", .F.)
+    local oRel      := TReport():New("TREPORT", "Relatório de Pedido de Compra",, {|oRel| Get2(oRel, cAlias)}, "Esse relatório imprimirá as informações de todos os pedidos de compra.", .F.)
     local oSection1 := TRSection():New(oRel, "Informações do Pedido de Compra",,,,,,,,,, .T.)
     local oSection2 := TRSection():New(oSection1, "Conteúdo do Pedido de Compra",,,,,,,,,, .T.)
     local oQuebra
@@ -149,19 +153,19 @@ Static Function Repo2()
     private cTotal    := ""
 
     //! New(oParent, cName, cAlias, cTitle, cPicture, nSize, lPixel, bBlock, cAlign, lLineBreak, cHeaderAlign, lCellBreak, nColSpace, lAutoSize, nClrBack, nClrFore, lBold)
-    TRCell():New(oSection1, "PEDIDO", cAlias, "PEDIDO",, 20,, {|| Alltrim("Pedido: " + cCodPed)}, "LEFT", .T., "LEFT",,,,,, .T.)
-    TRCell():New(oSection1, "EMISSAO", cAlias, "EMISSAO", PesqPict("SC7", "C7_EMISSAO"), 12,, {|| Alltrim(cEmissao)}, "CENTER", .T., "CENTER",,,,,, .T.)
-    TRCell():New(oSection1, "FORNECEDOR", cAlias, "FORNECEDOR",, 10,, {|| Alltrim(cFornec)}, "LEFT", .T., "LEFT",,,,,, .T.)
-    TRCell():New(oSection1, "LOJA", cAlias, "LOJA",, 4,, {|| Alltrim(cLoja)}, "LEFT", .T., "LEFT",,,,,, .T.)
-    TRCell():New(oSection1, "PAGTO.", cAlias, "PAGTO.",, 10,, {|| Alltrim(cPagto)}, "LEFT", .T., "LEFT",,,,,, .T.)
+    TRCell():New(oSection1, "PEDIDO", cAlias, "PEDIDO",, 20,, {|| Alltrim("Pedido: " + cCodPed)}, "LEFT", .T., "LEFT",,,,AZUL_PASTEL,, .T.)
+    TRCell():New(oSection1, "EMISSAO", cAlias, "EMISSAO", PesqPict("SC7", "C7_EMISSAO"), 12,, {|| Alltrim(cEmissao)}, "CENTER", .T., "CENTER",,,,AZUL_PASTEL,, .T.)
+    TRCell():New(oSection1, "FORNECEDOR", cAlias, "FORNECEDOR",, 10,, {|| Alltrim(cFornec)}, "LEFT", .T., "LEFT",,,,AZUL_PASTEL,, .T.)
+    TRCell():New(oSection1, "LOJA", cAlias, "LOJA",, 4,, {|| Alltrim(cLoja)}, "LEFT", .T., "LEFT",,,,AZUL_PASTEL,, .T.)
+    TRCell():New(oSection1, "PAGTO.", cAlias, "PAGTO.",, 10,, {|| Alltrim(cPagto)}, "LEFT", .T., "LEFT",,,,AZUL_PASTEL,, .T.)
 
-    TRCell():New(oSection2, 'C7_PRODUTO', cAlias, 'CODIGO',, 8,,, 'LEFT', .T., 'LEFT',,,,,, .T.)
-    TRCell():New(oSection2, 'C7_DESCRI', cAlias, 'PRODUTO',, 50,,, 'LEFT', .T., 'LEFT',,,,,, .T.)
-    TRCell():New(oSection2, 'C7_QUANT', cAlias, 'QTD.',, 10,,, 'LEFT', .T., 'LEFT',,,,,, .T.)
-    TRCell():New(oSection2, 'C7_PRECO', cAlias, 'PREÇO',, 20,,, 'LEFT', .T., 'LEFT',,,,,, .T.)
-    TRCell():New(oSection2, 'C7_TOTAL', cTotal, 'TOTAL',, 20,,, 'LEFT', .T., 'LEFT',,,,,, .T.)
+    TRCell():New(oSection2, 'C7_PRODUTO', cAlias, 'CODIGO',, 8,,, 'LEFT', .T., 'LEFT',,,,ROSA_PASTEL,, .T.)
+    TRCell():New(oSection2, 'C7_DESCRI', cAlias, 'PRODUTO',, 50,,, 'LEFT', .T., 'LEFT',,,,ROSA_PASTEL,, .T.)
+    TRCell():New(oSection2, 'C7_QUANT', cAlias, 'QTD.',, 10,,, 'LEFT', .T., 'LEFT',,,,ROSA_PASTEL,, .T.)
+    TRCell():New(oSection2, 'C7_PRECO', cAlias, 'PREÇO',, 20,,, 'LEFT', .T., 'LEFT',,,,ROSA_PASTEL,, .T.)
+    TRCell():New(oSection2, 'C7_TOTAL', cTotal, 'TOTAL',, 20,,, 'LEFT', .T., 'LEFT',,,,ROSA_PASTEL,, .T.)
 
-    oQuebra := TRBreak():New(oSection1, oSection1:Cell('PEDIDO'), "", .T.)
+    oQuebra := TRBreak():New(oSection1, oSection1:Cell('PEDIDO'),, .T.)
     TRFunction():New(oSection2:Cell('C7_TOTAL'), 'VALTOT', 'SUM', oQuebra, 'VALOR TOTAL',,, .F., .F., .F.)
     
 Return oRel
@@ -170,9 +174,9 @@ Static Function Get2(oRel, cAlias)
     local oSection1 := oRel:Section(1)
     local oSection2 := oSection1:Section(1)
 
-    local cQuery  := Query2()
-    local nTot    := 0
-    local cPedido := ""
+    local cQuery    := Query2()
+    local nTot      := 0
+    local cUltimo   := ""
 
     DbUseArea(.T., 'TOPCONN', TcGenQry(NIL, NIL, cQuery), cAlias, .T., .T.)
     Count TO nTot
@@ -184,7 +188,12 @@ Static Function Get2(oRel, cAlias)
 
     While (cAlias)->(!Eof())
 
-        if alltrim(cPedido) <> Alltrim((cAlias)->(C7_NUM))
+        if cUltimo <> Alltrim((cAlias)->(C7_NUM))
+            if !Empty(cUltimo)
+                oSection1:Finish()
+                oSection2:Finish()
+                oRel:EndPage()
+            endif
 
             oSection1:Init()
 
@@ -193,12 +202,13 @@ Static Function Get2(oRel, cAlias)
             cFornec     := Alltrim((cAlias)->(C7_FORNECE))
             cLoja       := Alltrim((cAlias)->(C7_LOJA))
             cPagto      := Alltrim((cAlias)->(C7_COND))
-            cPedido     := Alltrim((cAlias)->(C7_NUM))
+
+            cUltimo := Alltrim((cAlias)->(C7_NUM))
 
             oSection1:PrintLine()
-
             oSection2:Init()
-        endif
+
+        endif 
 
         oSection2:Cell('C7_PRODUTO'):SetValue((cAlias)->(C7_PRODUTO))
         oSection2:Cell('C7_DESCRI'):SetValue((cAlias)->(C7_DESCRI))
@@ -207,6 +217,7 @@ Static Function Get2(oRel, cAlias)
         oSection2:Cell('C7_TOTAL'):SetValue((cAlias)->(C7_TOTAL))
 
         oSection2:PrintLine()
+        oRel:IncMeter()
 
         (cAlias)->(DbSkip())
     End Do

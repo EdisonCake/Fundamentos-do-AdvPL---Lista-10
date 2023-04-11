@@ -23,14 +23,11 @@ Static Function GetReport()
     oSection := TRSection():New(oRel, "Cadastro de Produtos")
 
     TRCell():New(oSection, "B1_COD", "SB1", "CODIGO", /* cPicture */, 8, /* lPixel */, /* bBlock */, "CENTER", .T., "CENTER", /* lCellBreak */, /* nColSpace */, .T., /* Cor Funo */, /* Cor Front */, .T.)
-
     TRCell():New(oSection, "B1_DESC", "SB1", "DESCRICAO", /* cPicture */, 20, /* lPixel */, /* bBlock */, "LEFT", .T., "LEFT", /* lCellBreak */, /* nColSpace */, .T., /* Cor Funo */, /* Cor Front */, .T.)
-
     TRCell():New(oSection, "B1_UM", "SB1", "U.M.", /* cPicture */, 4, /* lPixel */, /* bBlock */, "CENTER", .T., "CENTER", /* lCellBreak */, /* nColSpace */, .T., /* Cor Funo */, /* Cor Front */, .T.)
-
     TRCell():New(oSection, "B1_PRV1", "SB1", "PREÇO", /* cPicture */, 10, /* lPixel */, /* bBlock */, "RIGHT", .T., "RIGHT", /* lCellBreak */, /* nColSpace */, .T., /* Cor Funo */, /* Cor Front */, .T.)
-
     TRCell():New(oSection, "B1_LOCPAD", "SB1", "ARMAZÉM", /* cPicture */, 7, /* lPixel */, /* bBlock */, "CENTER", .T., "CENTER", /* lCellBreak */, /* nColSpace */, .T., /* Cor Funo */, /* Cor Front */, .T.)
+    
 Return oRel
 
 Static Function Imprime(oRel, cAlias)
