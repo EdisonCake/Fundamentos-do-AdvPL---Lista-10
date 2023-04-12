@@ -24,7 +24,7 @@ Return
 
 Static Function GetReport()
     local cAlias        := GetNextAlias()
-    local oRelatorio    := TReport():New("TREPORT", "Relatório de Pedidos de Venda",, {|oRelatorio| GetInfo(oRelatorio, cAlias)}, "Esse relatório imprimirá as informações dos pedidos de venda", .F.)
+    local oRelatorio    := TReport():New("TREPORT", "Relatório do Pedidos de Venda",, {|oRelatorio| GetInfo(oRelatorio, cAlias)}, "Esse relatório imprimirá as informações do pedido de venda selecionado", .F.)
 
     local oSection1     := TRSection():New(oRelatorio, "Informações do Pedido de Venda",,,,,,,,,, .T.)
     local oSection2     := TRSection():New(oSection1, "Produtos no Pedido de Venda",,,,,,,,,, .T.)
@@ -120,6 +120,6 @@ Return
 Static Function GeraQuery()
     local cQuery := ""
 
-    cQuery := "SELECT PV.C5_NUM, PV.C5_EMISSAO, CLI.A1_NOME, COND.E4_DESCRI, PROD.C6_ITEM, PROD.C6_PRODUTO, PROD.C6_DESCRI, PROD.C6_QTDVEN, PROD.C6_PRCVEN, PROD.C6_VALOR FROM " + RetSqlName("SC5990") + " PV INNER JOIN " + RetSqlName("SE4") + " COND ON PV.C5_CONDPAG = COND.E4_CODIGO INNER JOIN " + RetSqlName("SA1") + " CLI ON PV.C5_CLIENTE = CLI.A1_COD INNER JOIN " + RetSqlName("SC6") + " PROD ON PV.C5_NUM = PROD.C6_NUM"
+    cQuery := "SELECT PV.C5_NUM, PV.C5_EMISSAO, CLI.A1_NOME, COND.E4_DESCRI, PROD.C6_ITEM, PROD.C6_PRODUTO, PROD.C6_DESCRI, PROD.C6_QTDVEN, PROD.C6_PRCVEN, PROD.C6_VALOR FROM " + RetSqlName("SC5990") + " PV INNER JOIN " + RetSqlName("SE4") + " COND ON PV.C5_CONDPAG = COND.E4_CODIGO INNER JOIN " + RetSqlName("SA1") + " CLI ON PV.C5_CLIENTE = CLI.A1_COD INNER JOIN " + RetSqlName("SC6") + " PROD ON PV.C5_NUM = PROD.C6_NUM WHERE C5_NUM = '" + alltrim(SC5->C5_NUM) + "'"
 
 Return cQuery
